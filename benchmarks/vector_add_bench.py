@@ -4,7 +4,6 @@ import sys
 import time
 from pathlib import Path
 
-
 ROOT = Path(__file__).resolve().parents[1]
 SRC = ROOT / "src"
 if str(SRC) not in sys.path:
@@ -52,11 +51,19 @@ def main() -> None:
     for size in sizes:
         a = torch.randn(size, device=device, dtype=torch.float32)
         b = torch.randn(size, device=device, dtype=torch.float32)
-        torch_ms = _mean_ms(lambda: reference_vector_add(a, b))
+
+        def run_reference(a=a, b=b):
+            return reference_vector_add(a, b)
+
+        torch_ms = _mean_ms(run_reference)
         triton_ms = float("nan")
         if triton_impl is not None:
             torch.cuda.synchronize()
-            triton_ms = _mean_ms(lambda: triton_impl(a, b))
+
+            def run_triton(a=a, b=b, triton_impl=triton_impl):
+                return triton_impl(a, b)
+
+            triton_ms = _mean_ms(run_triton)
             torch.cuda.synchronize()
         print(f"{size},{torch_ms:.6f},{triton_ms:.6f}")
 
