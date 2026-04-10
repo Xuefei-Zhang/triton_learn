@@ -12,9 +12,10 @@ Reduction is the first time you need to think beyond simple elementwise mapping.
 ## Mission
 
 1. Read `docs/concepts/numerical-stability-in-softmax.md`.
-2. Implement row-wise reduction exercises in `playground/`.
-3. Add a reference softmax study in a notebook or scratch script.
-4. Design the future `kernels/softmax.py` API before writing code.
+2. Run `python playground/phase2_softmax_steps_demo.py`.
+3. Implement the reasoning steps in `playground/phase2_reduction_exercise.py`.
+4. Fill out `playground/phase2_softmax_exercise.py` before attempting any Triton softmax code.
+5. Design the future `kernels/softmax.py` API before writing code.
 
 ## Test and Benchmark Checklist
 

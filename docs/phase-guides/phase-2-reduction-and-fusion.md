@@ -49,6 +49,13 @@ Explain why subtracting the maximum is required in practice.
 
 Follow `missions/phase-2-reduction-and-fusion.md`.
 
+Starter assets for this phase:
+
+- `playground/phase2_softmax_steps_demo.py`
+- `playground/phase2_reduction_exercise.py`
+- `playground/phase2_softmax_exercise.py`
+- `src/triton_learn/runtime/phase2_support.py`
+
 ## 10. Test and Benchmark Checklist
 
 - define numeric tolerances
