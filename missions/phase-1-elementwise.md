@@ -12,9 +12,11 @@ Elementwise kernels are the cleanest place to learn program mapping, pointer ari
 ## Mission
 
 1. Read `docs/concepts/grid-program-id-offset-mask.md`.
+2. Run `python playground/phase1_block_mapping_demo.py`.
 2. Study `src/triton_learn/kernels/vector_add.py`.
-3. Modify block size locally and re-run the benchmark.
-4. Implement one new unary or binary elementwise exercise in `playground/`.
+3. Open `playground/phase1_vector_add_exercise.py` and fill the TODO explanations before writing code.
+4. Modify block size locally and re-run the benchmark.
+5. Implement one new unary or binary elementwise exercise in `playground/phase1_unary_op_exercise.py`.
 
 ## Test and Benchmark Checklist
 

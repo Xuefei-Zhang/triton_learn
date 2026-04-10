@@ -49,6 +49,13 @@ Explain how the final partial block is handled.
 
 Follow `missions/phase-1-elementwise.md`.
 
+Starter assets for this phase:
+
+- `playground/phase1_block_mapping_demo.py`
+- `playground/phase1_vector_add_exercise.py`
+- `playground/phase1_unary_op_exercise.py`
+- `src/triton_learn/runtime/phase1_support.py`
+
 ## 10. Test and Benchmark Checklist
 
 - compare against the reference path
