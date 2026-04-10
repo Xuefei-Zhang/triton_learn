@@ -3,20 +3,19 @@ from __future__ import annotations
 import sys
 from pathlib import Path
 
-
 ROOT = Path(__file__).resolve().parents[1]
 SRC = ROOT / "src"
 if str(SRC) not in sys.path:
     sys.path.insert(0, str(SRC))
 
-from triton_learn.runtime.phase4_support import (
-    describe_attention_flow,
-    phase4_composition_questions,
-    phase4_optimization_targets,
-)
-
 
 def main() -> None:
+    from triton_learn.runtime.phase4_support import (
+        describe_attention_flow,
+        phase4_composition_questions,
+        phase4_optimization_targets,
+    )
+
     print("Phase 4 attention flow demo")
     print("=" * 27)
 

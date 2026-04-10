@@ -3,20 +3,19 @@ from __future__ import annotations
 import sys
 from pathlib import Path
 
-
 ROOT = Path(__file__).resolve().parents[1]
 SRC = ROOT / "src"
 if str(SRC) not in sys.path:
     sys.path.insert(0, str(SRC))
 
-from triton_learn.runtime.phase3_support import (
-    describe_matmul_problem,
-    phase3_autotune_configs,
-    phase3_problem_cases,
-)
-
 
 def main() -> None:
+    from triton_learn.runtime.phase3_support import (
+        describe_matmul_problem,
+        phase3_autotune_configs,
+        phase3_problem_cases,
+    )
+
     print("Phase 3 tiling demo")
     print("=" * 19)
 

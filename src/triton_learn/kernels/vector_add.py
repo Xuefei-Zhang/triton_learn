@@ -41,6 +41,9 @@ def triton_vector_add(a: torch.Tensor, b: torch.Tensor, block_size: int = 1024) 
     b_flat = b.contiguous().reshape(-1)
     out = torch.empty_like(a_flat)
     n_elements = out.numel()
-    grid = lambda meta: (triton.cdiv(n_elements, meta["BLOCK_SIZE"]),)
+
+    def grid(meta):
+        return (triton.cdiv(n_elements, meta["BLOCK_SIZE"]),)
+
     _vector_add_kernel[grid](a_flat, b_flat, out, n_elements, BLOCK_SIZE=block_size)
     return out.reshape(a.shape)
