@@ -13,9 +13,12 @@ Matmul is where Triton starts to feel like real performance engineering rather t
 ## Mission
 
 1. Read `docs/concepts/tiling-blocking-and-data-reuse.md`.
-2. Benchmark the reference linear path on a few shapes.
-3. Sketch the future matmul kernel interface.
-4. Decide which meta-parameters will eventually be tunable.
+2. Run `python playground/phase3_tiling_demo.py`.
+3. Fill out `playground/phase3_matmul_exercise.py`.
+4. Fill out `playground/phase3_autotune_exercise.py`.
+5. Benchmark the reference linear path on a few shapes.
+6. Sketch the future matmul kernel interface.
+7. Decide which meta-parameters will eventually be tunable.
 
 ## Test and Benchmark Checklist
 

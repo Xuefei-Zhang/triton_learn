@@ -47,6 +47,13 @@ Explain why a correct matmul can still be a poor GPU kernel.
 
 Follow `missions/phase-3-matmul-tiling-and-autotune.md`.
 
+Starter assets for this phase:
+
+- `playground/phase3_tiling_demo.py`
+- `playground/phase3_matmul_exercise.py`
+- `playground/phase3_autotune_exercise.py`
+- `src/triton_learn/runtime/phase3_support.py`
+
 ## 10. Test and Benchmark Checklist
 
 - benchmark multiple shapes
