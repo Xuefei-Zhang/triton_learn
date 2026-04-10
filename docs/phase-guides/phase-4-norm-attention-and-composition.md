@@ -46,6 +46,13 @@ Explain why not every part of a model should be optimized first.
 
 Follow `missions/phase-4-norm-attention-and-composition.md`.
 
+Starter assets for this phase:
+
+- `playground/phase4_attention_flow_demo.py`
+- `playground/phase4_norm_attention_exercise.py`
+- `playground/phase4_target_selection_exercise.py`
+- `src/triton_learn/runtime/phase4_support.py`
+
 ## 10. Test and Benchmark Checklist
 
 - validate shapes and outputs first

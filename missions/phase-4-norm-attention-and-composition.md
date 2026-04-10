@@ -12,9 +12,11 @@ This is where separate ideas start forming something that looks like a real mode
 ## Mission
 
 1. Read `docs/architecture/final-project-overview.md`.
-2. Study `src/triton_learn/integration/toy_transformer_block.py`.
-3. Trace how reference attention and norm are composed.
-4. Write down which subpaths would be best Triton candidates next.
+2. Run `python playground/phase4_attention_flow_demo.py`.
+3. Study `src/triton_learn/integration/toy_transformer_block.py`.
+4. Fill out `playground/phase4_norm_attention_exercise.py`.
+5. Fill out `playground/phase4_target_selection_exercise.py`.
+6. Write down which subpaths would be best Triton candidates next.
 
 ## Test and Benchmark Checklist
 
