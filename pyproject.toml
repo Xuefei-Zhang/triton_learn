@@ -16,6 +16,7 @@ dev = [
   "ruff>=0.5",
 ]
 runtime = [
+  "numpy>=2.0",
   "torch>=2.2",
   "triton>=2.2",
 ]
