@@ -22,8 +22,7 @@ The starter implementation is intentionally biased toward immediate usability:
 ```bash
 python -m venv .venv
 source .venv/bin/activate
-python -m pip install --upgrade pip setuptools wheel
-pip install -e '.[dev,runtime]'
+pip install -e .[dev,runtime]
 pytest -q
 python -m ruff check .
 python benchmarks/vector_add_bench.py
@@ -31,9 +30,7 @@ python benchmarks/vector_add_bench.py
 
 Notes:
 
-- If you only want to inspect the repository structure and markdown content first, you can delay the `runtime` extra install. But to run the reference operators, tests, and benchmark paths, install `'.[dev,runtime]'`.
-- The extras are quoted because `zsh` treats square brackets as glob patterns.
-- Upgrading `pip setuptools wheel` first avoids editable-install failures like `invalid command 'bdist_wheel'` in fresh virtual environments.
+- If you only want to inspect the repository structure and markdown content first, you can delay the `runtime` extra install. But to run the reference operators, tests, and benchmark paths, install `.[dev,runtime]`.
 - GPU/Triton tests automatically skip when CUDA or Triton is unavailable.
 - The learning path starts in `missions/phase-0-bootstrap.md`.
 - The full spec and plan used to build this starter repository are in:
