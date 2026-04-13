@@ -1,23 +1,31 @@
 from __future__ import annotations
 
+# Phase 4 is about system composition and choosing worthwhile optimization targets,
+# so these helpers describe flow and priorities rather than running Triton kernels.
 from dataclasses import dataclass
 
 
+# One step in a simplified attention-style dataflow.
 @dataclass(frozen=True)
 class AttentionFlowStep:
     name: str
     description: str
+    # Whether this step looks like a promising optimization candidate.
     optimization_candidate: bool
 
 
+# One possible subpath that a learner might choose to optimize next.
 @dataclass(frozen=True)
 class OptimizationTarget:
     name: str
+    # A short label for the kind of benefit we expect.
     expected_benefit: str
+    # Human-readable explanation of why this target is interesting.
     reason: str
 
 
 def describe_attention_flow() -> list[AttentionFlowStep]:
+    # Return a simplified end-to-end attention flow in execution order.
     return [
         AttentionFlowStep(
             name="qkv-projection",
@@ -48,6 +56,8 @@ def describe_attention_flow() -> list[AttentionFlowStep]:
 
 
 def phase4_optimization_targets() -> list[OptimizationTarget]:
+    # These targets are framed in beginner-friendly language so the learner can justify
+    # optimization choices instead of saying "optimize everything".
     return [
         OptimizationTarget(
             name="softmax-path",
@@ -68,6 +78,7 @@ def phase4_optimization_targets() -> list[OptimizationTarget]:
 
 
 def phase4_composition_questions() -> list[str]:
+    # These questions are intentionally phrased as prompts for design thinking.
     return [
         "Which part of the block is currently the clearest optimization target?",
         "Which intermediate tensors are created only to be consumed immediately?",
