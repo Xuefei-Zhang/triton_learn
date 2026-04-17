@@ -24,6 +24,34 @@ def test_reference_softmax_matches_torch_softmax():
     torch.testing.assert_close(out, torch.softmax(x, dim=-1))
 
 
+def test_reference_rowwise_softmax_2d_matches_torch_softmax_last_dim():
+    from triton_learn.baseline.reference_ops import reference_rowwise_softmax_2d
+
+    x = torch.randn(8, 16, dtype=torch.float32)
+
+    out = reference_rowwise_softmax_2d(x)
+
+    torch.testing.assert_close(out, torch.softmax(x, dim=-1))
+
+
+def test_reference_rowwise_softmax_2d_requires_2d_input():
+    from triton_learn.baseline.reference_ops import reference_rowwise_softmax_2d
+
+    x = torch.randn(2, 3, 4, dtype=torch.float32)
+
+    with pytest.raises(ValueError, match=r"softmax expects a 2D tensor \[rows, cols\]"):
+        reference_rowwise_softmax_2d(x)
+
+
+def test_reference_rowwise_softmax_2d_requires_at_least_one_column():
+    from triton_learn.baseline.reference_ops import reference_rowwise_softmax_2d
+
+    x = torch.empty(3, 0, dtype=torch.float32)
+
+    with pytest.raises(ValueError, match="softmax requires at least one column"):
+        reference_rowwise_softmax_2d(x)
+
+
 def test_reference_layer_norm_preserves_shape():
     from triton_learn.baseline.reference_ops import reference_layer_norm
 

@@ -4,7 +4,7 @@ from __future__ import annotations
 from typing import Literal
 
 # Provider selection depends on the runtime snapshot returned by `detect_runtime_capabilities`.
-from triton_learn.env import detect_runtime_capabilities
+from ..env import detect_runtime_capabilities
 
 # In this repository, vector add can be requested in three modes:
 # - "auto": choose the best provider automatically
@@ -40,4 +40,21 @@ def choose_vector_add_provider(requested: Provider, device_type: str) -> Literal
         return "triton"
 
     # Otherwise the safe fallback is always the PyTorch/reference path.
+    return "torch"
+
+
+def choose_softmax_provider(requested: Provider, device_type: str) -> Literal["torch", "triton"]:
+    capabilities = detect_runtime_capabilities()
+
+    if requested == "torch":
+        return "torch"
+
+    if requested == "triton":
+        if not (capabilities.has_triton and capabilities.has_cuda and device_type == "cuda"):
+            raise RuntimeError("Triton provider requires CUDA and Triton availability")
+        return "triton"
+
+    if capabilities.has_triton and capabilities.has_cuda and device_type == "cuda":
+        return "triton"
+
     return "torch"

@@ -25,6 +25,15 @@ def reference_softmax(x: torch.Tensor, dim: int = -1) -> torch.Tensor:
     return torch.softmax(x, dim=dim)
 
 
+def reference_rowwise_softmax_2d(x: torch.Tensor) -> torch.Tensor:
+    if x.ndim != 2:
+        raise ValueError("softmax expects a 2D tensor [rows, cols]")
+    if x.shape[1] == 0:
+        raise ValueError("softmax requires at least one column")
+
+    return torch.softmax(x, dim=-1)
+
+
 def reference_layer_norm(x: torch.Tensor, normalized_shape: int) -> torch.Tensor:
     # PyTorch expects `normalized_shape` as a tuple, even if we are only normalizing
     # over one trailing dimension.
