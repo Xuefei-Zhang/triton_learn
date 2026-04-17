@@ -25,7 +25,7 @@ from .phase4_support import (
     phase4_composition_questions,
     phase4_optimization_targets,
 )
-from .providers import Provider, choose_vector_add_provider
+from .providers import Provider, choose_softmax_provider, choose_vector_add_provider
 
 __all__ = [
     "AttentionFlowStep",
@@ -38,6 +38,7 @@ __all__ = [
     "Phase3ProblemCase",
     "Provider",
     "StableSoftmaxSummary",
+    "choose_softmax_provider",
     "choose_vector_add_provider",
     "describe_attention_flow",
     "describe_matmul_problem",
