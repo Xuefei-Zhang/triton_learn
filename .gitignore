@@ -12,3 +12,4 @@ dist/
 *.svg
 *.png
 *.pdf
+.worktrees/
