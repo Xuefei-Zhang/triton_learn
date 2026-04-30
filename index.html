@@ -1,0 +1,386 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Triton Learn Markdown Preview</title>
+  <style>
+    :root {
+      --bg: #0b1020;
+      --panel: #121933;
+      --panel-2: #182241;
+      --text: #ebf1ff;
+      --muted: #9bb0d3;
+      --accent: #6aa6ff;
+      --border: #2a3763;
+      --code: #11182f;
+      --link: #8ec5ff;
+      --shadow: rgba(0, 0, 0, 0.25);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      display: grid;
+      grid-template-columns: 320px minmax(0, 1fr);
+      min-height: 100vh;
+    }
+    aside {
+      background: var(--panel);
+      border-right: 1px solid var(--border);
+      padding: 16px;
+      overflow-y: auto;
+      position: sticky;
+      top: 0;
+      max-height: 100vh;
+    }
+    main {
+      min-width: 0;
+      padding: 24px 32px 48px;
+    }
+    .topbar {
+      display: none;
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      grid-column: 1 / -1;
+      background: var(--panel);
+      border-bottom: 1px solid var(--border);
+      padding: 12px 16px;
+      align-items: center;
+      gap: 12px;
+    }
+    .toggle-btn, .nav-btn {
+      border: 1px solid var(--border);
+      background: var(--panel-2);
+      color: var(--text);
+      border-radius: 8px;
+      padding: 8px 12px;
+      cursor: pointer;
+    }
+    .search {
+      width: 100%;
+      margin: 12px 0 16px;
+      padding: 10px 12px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: var(--panel-2);
+      color: var(--text);
+    }
+    .title { font-size: 1.1rem; font-weight: 700; margin: 0; }
+    .subtitle { margin: 4px 0 0; color: var(--muted); font-size: 0.9rem; }
+    .section { margin-top: 18px; }
+    .section-title {
+      color: var(--muted);
+      text-transform: uppercase;
+      font-size: 0.74rem;
+      letter-spacing: 0.08em;
+      margin-bottom: 8px;
+    }
+    ul.tree { list-style: none; padding-left: 0; margin: 0; }
+    ul.tree ul { list-style: none; padding-left: 16px; margin: 6px 0 0; border-left: 1px solid rgba(255,255,255,0.08); }
+    li.item { margin: 4px 0; }
+    button.linkish, a.linkish {
+      width: 100%;
+      text-align: left;
+      color: var(--text);
+      text-decoration: none;
+      background: transparent;
+      border: 0;
+      padding: 8px 10px;
+      border-radius: 8px;
+      cursor: pointer;
+      font: inherit;
+      display: block;
+    }
+    button.linkish:hover, a.linkish:hover, .active > button.linkish {
+      background: rgba(106, 166, 255, 0.15);
+    }
+    .muted { color: var(--muted); }
+    #content {
+      max-width: 980px;
+      margin: 0 auto;
+      line-height: 1.7;
+      overflow-wrap: anywhere;
+    }
+    #content h1, #content h2, #content h3 { line-height: 1.25; }
+    #content a { color: var(--link); }
+    #content pre, #content code {
+      font-family: "SFMono-Regular", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    }
+    #content pre {
+      background: var(--code);
+      padding: 14px;
+      overflow-x: auto;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      box-shadow: 0 10px 30px var(--shadow);
+    }
+    #content :not(pre) > code {
+      background: rgba(255,255,255,0.06);
+      padding: 0.12rem 0.35rem;
+      border-radius: 0.35rem;
+      color: #cde0ff;
+    }
+    .meta {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      align-items: center;
+      margin-bottom: 20px;
+      color: var(--muted);
+      flex-wrap: wrap;
+    }
+    .empty { color: var(--muted); font-style: italic; }
+    .status { color: var(--muted); margin-top: 8px; }
+    @media (max-width: 900px) {
+      body {
+        grid-template-columns: 1fr;
+      }
+      .topbar { display: flex; }
+      aside {
+        position: fixed;
+        inset: 56px auto 0 0;
+        width: min(86vw, 320px);
+        transform: translateX(-100%);
+        transition: transform 0.2s ease;
+        z-index: 30;
+        box-shadow: 0 18px 40px var(--shadow);
+      }
+      aside.open { transform: translateX(0); }
+      main { padding: 18px 16px 36px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="topbar">
+    <button class="toggle-btn" id="sidebarToggle">☰ Docs</button>
+    <div>
+      <div class="title">Triton Learn Markdown Preview</div>
+      <div class="subtitle">Manifest-driven browser preview</div>
+    </div>
+  </div>
+  <aside id="sidebar">
+    <h1 class="title">Triton Learn Docs</h1>
+    <p class="subtitle">Repo-wide markdown browser</p>
+    <input id="search" class="search" type="search" placeholder="Search page titles…" aria-label="Search page titles" />
+    <div id="nav"></div>
+    <p class="status" id="navStatus"></p>
+  </aside>
+  <main>
+    <div class="meta">
+      <div>
+        <div class="muted">Current page</div>
+        <div id="currentTitle"></div>
+      </div>
+      <button class="nav-btn" id="homeBtn">Open landing page</button>
+    </div>
+    <article id="content"><p class="empty">Loading…</p></article>
+  </main>
+
+  <script type="module">
+    import { marked } from 'https://cdn.jsdelivr.net/npm/marked/lib/marked.esm.js';
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+
+    mermaid.initialize({ startOnLoad: false, theme: 'dark', securityLevel: 'loose' });
+
+    const manifest = await fetch('./preview-manifest.json').then((r) => {
+      if (!r.ok) throw new Error('Failed to load preview-manifest.json');
+      return r.json();
+    });
+
+    const sidebar = document.getElementById('sidebar');
+    const nav = document.getElementById('nav');
+    const navStatus = document.getElementById('navStatus');
+    const search = document.getElementById('search');
+    const content = document.getElementById('content');
+    const currentTitle = document.getElementById('currentTitle');
+    const sidebarToggle = document.getElementById('sidebarToggle');
+    const homeBtn = document.getElementById('homeBtn');
+
+    const allPages = [];
+
+    function flatten(items) {
+      for (const item of items) {
+        if (item.file) allPages.push(item);
+        if (item.items) flatten(item.items);
+      }
+    }
+    flatten(manifest.sidebar);
+
+    const titleForFile = new Map(allPages.map((item) => [item.file, item.title]));
+
+    function normalizePath(path) {
+      return path.replace(/^\.\//, '').replace(/^\//, '');
+    }
+
+    function escapeHtml(text) {
+      return text
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+    }
+
+    function resolveRelative(baseFile, target) {
+      const baseParts = normalizePath(baseFile).split('/');
+      baseParts.pop();
+      const targetParts = target.split('/');
+      for (const part of targetParts) {
+        if (!part || part === '.') continue;
+        if (part === '..') baseParts.pop();
+        else baseParts.push(part);
+      }
+      return normalizePath(baseParts.join('/'));
+    }
+
+    function inferTitle(file) {
+      const stem = file.split('/').pop().replace(/\.md$/i, '');
+      return stem
+        .replace(/^\d{4}-\d{2}-\d{2}-/, '')
+        .replace(/[-_]/g, ' ')
+        .replace(/\b\w/g, (m) => m.toUpperCase());
+    }
+
+    function buildTree(items, query = '') {
+      const list = document.createElement('ul');
+      list.className = 'tree';
+      let visibleCount = 0;
+
+      for (const item of items) {
+        const node = document.createElement('li');
+        node.className = 'item';
+
+        if (item.file) {
+          const title = item.title || inferTitle(item.file);
+          const matches = !query || title.toLowerCase().includes(query);
+          if (!matches) continue;
+          visibleCount += 1;
+          const btn = document.createElement('button');
+          btn.className = 'linkish';
+          btn.textContent = title;
+          btn.type = 'button';
+          btn.addEventListener('click', () => openPage(item.file));
+          if (normalizePath(location.hash.slice(1) || manifest.landing) === normalizePath(item.file)) {
+            node.classList.add('active');
+          }
+          node.appendChild(btn);
+          list.appendChild(node);
+          continue;
+        }
+
+        const section = document.createElement('div');
+        section.className = 'section';
+        const heading = document.createElement('div');
+        heading.className = 'section-title';
+        heading.textContent = item.title || 'Section';
+        section.appendChild(heading);
+
+        const child = buildTree(item.items || [], query);
+        if (child.visibleCount === 0) continue;
+        visibleCount += child.visibleCount;
+        section.appendChild(child.element);
+        node.appendChild(section);
+        list.appendChild(node);
+      }
+
+      return { element: list, visibleCount };
+    }
+
+    function renderNav(query = '') {
+      const tree = buildTree(manifest.sidebar, query.trim().toLowerCase());
+      nav.replaceChildren(tree.element);
+      navStatus.textContent = `${tree.visibleCount} page${tree.visibleCount === 1 ? '' : 's'} visible`;
+    }
+
+    function rewriteMarkdownLinks(html, currentFile) {
+      const parser = new DOMParser();
+      const doc = parser.parseFromString(`<body>${html}</body>`, 'text/html');
+
+      for (const anchor of doc.querySelectorAll('a[href]')) {
+        const href = anchor.getAttribute('href');
+        if (!href) continue;
+        if (href.endsWith('.md') || href.includes('.md#')) {
+          const [rawFile, hash = ''] = href.split('#');
+          const resolved = rawFile.startsWith('/') ? normalizePath(rawFile) : resolveRelative(currentFile, rawFile);
+          anchor.setAttribute('href', `#${resolved}${hash ? `#${hash}` : ''}`);
+        }
+      }
+
+      for (const code of doc.querySelectorAll('code')) {
+        if (code.closest('pre')) continue;
+        const text = code.textContent?.trim() || '';
+        if (!/\.md$/i.test(text)) continue;
+        const resolved = text.startsWith('/') ? normalizePath(text) : resolveRelative(currentFile, text);
+        const a = doc.createElement('a');
+        a.href = `#${resolved}`;
+        a.textContent = text;
+        a.className = 'linkish-inline';
+        code.replaceWith(a);
+      }
+
+      return doc.body.innerHTML;
+    }
+
+    async function renderMermaid() {
+      const blocks = Array.from(content.querySelectorAll('code.language-mermaid'));
+      if (blocks.length === 0) return;
+      let i = 0;
+      for (const block of blocks) {
+        const pre = block.closest('pre');
+        if (!pre) continue;
+        const source = block.textContent || '';
+        const wrapper = document.createElement('div');
+        wrapper.className = 'mermaid';
+        wrapper.textContent = source;
+        pre.replaceWith(wrapper);
+        i += 1;
+      }
+      await mermaid.run({ nodes: content.querySelectorAll('.mermaid') });
+    }
+
+    async function openPage(file) {
+      const normalized = normalizePath(file || manifest.landing);
+      const response = await fetch(`./${normalized}`);
+      if (!response.ok) {
+        content.innerHTML = `<p class="empty">Failed to load ${escapeHtml(normalized)}</p>`;
+        currentTitle.textContent = normalized;
+        return;
+      }
+      const raw = await response.text();
+      const html = marked.parse(raw, { headerIds: true, mangle: false });
+      const rewritten = rewriteMarkdownLinks(html, normalized);
+      content.innerHTML = rewritten;
+      currentTitle.textContent = titleForFile.get(normalized) || inferTitle(normalized);
+      const hashValue = `#${normalized}`;
+      if (location.hash !== hashValue) history.replaceState(null, '', hashValue);
+      renderNav(search.value);
+      await renderMermaid();
+      if (window.innerWidth <= 900) sidebar.classList.remove('open');
+    }
+
+    window.addEventListener('hashchange', () => {
+      const raw = location.hash.slice(1);
+      const [file] = raw.split('#');
+      openPage(file || manifest.landing);
+    });
+
+    search.addEventListener('input', (event) => {
+      renderNav(event.target.value || '');
+    });
+
+    sidebarToggle.addEventListener('click', () => {
+      sidebar.classList.toggle('open');
+    });
+
+    homeBtn.addEventListener('click', () => openPage(manifest.landing));
+
+    renderNav('');
+    const startFile = normalizePath((location.hash.slice(1).split('#')[0]) || manifest.landing);
+    openPage(startFile);
+  </script>
+</body>
+</html>

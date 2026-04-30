@@ -1,0 +1,108 @@
+{
+  "title": "Triton Learn Markdown Preview",
+  "landing": "README.md",
+  "sidebar": [
+    {
+      "title": "Root",
+      "items": [
+        { "file": "README.md", "title": "Repository Home" }
+      ]
+    },
+    {
+      "title": "Docs",
+      "items": [
+        {
+          "title": "Architecture",
+          "items": [
+            { "file": "docs/architecture/final-project-overview.md", "title": "Final Project Overview" },
+            { "file": "docs/architecture/repository-layout.md", "title": "Repository Layout" }
+          ]
+        },
+        {
+          "title": "Concepts",
+          "items": [
+            { "file": "docs/concepts/glossary-gpu-basics.md", "title": "Glossary: GPU Basics" },
+            { "file": "docs/concepts/glossary-triton-basics.md", "title": "Glossary: Triton Basics" },
+            { "file": "docs/concepts/grid-program-id-offset-mask.md", "title": "Grid, Program ID, Offset, Mask" },
+            { "file": "docs/concepts/numerical-stability-in-softmax.md", "title": "Numerical Stability in Softmax" },
+            { "file": "docs/concepts/tiling-blocking-and-data-reuse.md", "title": "Tiling, Blocking, and Data Reuse" },
+            { "file": "docs/concepts/when-to-look-at-ir-ptx-asm.md", "title": "When to Look at IR, PTX, ASM" }
+          ]
+        },
+        {
+          "title": "Phase Guides",
+          "items": [
+            { "file": "docs/phase-guides/phase-0-bootstrap-and-gpu-foundations.md", "title": "Phase 0: Bootstrap and GPU Foundations" },
+            { "file": "docs/phase-guides/phase-1-elementwise-kernel-fundamentals.md", "title": "Phase 1: Elementwise Kernel Fundamentals" },
+            { "file": "docs/phase-guides/phase-2-reduction-and-fusion.md", "title": "Phase 2: Reduction and Fusion" },
+            { "file": "docs/phase-guides/phase-3-matmul-tiling-and-autotune.md", "title": "Phase 3: Matmul, Tiling, and Autotune" },
+            { "file": "docs/phase-guides/phase-4-norm-attention-and-composition.md", "title": "Phase 4: Norm, Attention, and Composition" },
+            { "file": "docs/phase-guides/phase-5-debugging-profiling-and-performance-engineering.md", "title": "Phase 5: Debugging, Profiling, and Performance Engineering" },
+            { "file": "docs/phase-guides/phase-6-final-project-integration.md", "title": "Phase 6: Final Project Integration" }
+          ]
+        },
+        {
+          "title": "Profiling",
+          "items": [
+            { "file": "docs/profiling/common-correctness-bugs-in-triton.md", "title": "Common Correctness Bugs in Triton" },
+            { "file": "docs/profiling/how-to-read-a-triton-benchmark.md", "title": "How to Read a Triton Benchmark" },
+            { "file": "docs/profiling/kernel-tuning-case-studies.md", "title": "Kernel Tuning Case Studies" }
+          ]
+        },
+        {
+          "title": "Reference",
+          "items": [
+            { "file": "docs/reference/2026-04-07-language-mastery-lab-generic-design.md", "title": "Generic Design Reference" },
+            { "file": "docs/reference/roadmap.md", "title": "Roadmap" }
+          ]
+        },
+        {
+          "title": "Superpowers Plans",
+          "items": [
+            { "file": "docs/superpowers/plans/2026-04-10-triton-mastery-lab-starter.md", "title": "Starter Implementation Plan" },
+            { "file": "docs/superpowers/plans/2026-04-16-phase2-softmax-bridge.md", "title": "Phase 2 Softmax Bridge Plan" }
+          ]
+        },
+        {
+          "title": "Superpowers Specs",
+          "items": [
+            { "file": "docs/superpowers/specs/2026-04-10-triton-mastery-lab-design.md", "title": "Triton Mastery Lab Design" },
+            { "file": "docs/superpowers/specs/2026-04-16-phase2-softmax-bridge-design.md", "title": "Phase 2 Softmax Bridge Design" }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Missions",
+      "items": [
+        { "file": "missions/phase-0-bootstrap.md", "title": "Phase 0 Mission" },
+        { "file": "missions/phase-1-elementwise.md", "title": "Phase 1 Mission" },
+        { "file": "missions/phase-2-reduction-and-fusion.md", "title": "Phase 2 Mission" },
+        { "file": "missions/phase-3-matmul-tiling-and-autotune.md", "title": "Phase 3 Mission" },
+        { "file": "missions/phase-4-norm-attention-and-composition.md", "title": "Phase 4 Mission" },
+        { "file": "missions/phase-5-debugging-profiling-and-performance-engineering.md", "title": "Phase 5 Mission" },
+        { "file": "missions/phase-6-final-project.md", "title": "Phase 6 Mission" }
+      ]
+    },
+    {
+      "title": "Notes",
+      "items": [
+        { "file": "notes/README.md", "title": "Notes Home" },
+        { "file": "notes/pitfalls.md", "title": "Pitfalls" },
+        {
+          "title": "Interview",
+          "items": [
+            { "file": "notes/interview/vector-add.md", "title": "Vector Add" },
+            { "file": "notes/interview/readme-quickstart-under-the-hood.md", "title": "README Quickstart Under the Hood" }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Playground",
+      "items": [
+        { "file": "playground/README.md", "title": "Playground Home" }
+      ]
+    }
+  ]
+}
